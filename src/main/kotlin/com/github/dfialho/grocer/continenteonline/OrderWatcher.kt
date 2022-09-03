@@ -5,6 +5,7 @@ import java.nio.file.*
 import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
+
 class OrderWatcher(private val watchDirectory: Path, private val listener: Listener) {
 
     interface Listener {
@@ -38,7 +39,11 @@ class OrderWatcher(private val watchDirectory: Path, private val listener: Liste
                     logger.debug { "New file: ${event.kind()} ${event.context()} ${event.count()}" }
                     val filePath = event.context() as Path
                     executor.submit {
-                        listener.onOrderFile(watchDirectory.resolve(filePath))
+                        try {
+                            listener.onOrderFile(watchDirectory.resolve(filePath))
+                        } catch (e: Exception) {
+                            logger.error(e) { "Failed to process order file: ${filePath}" }
+                        }
                     }
                 }
 
