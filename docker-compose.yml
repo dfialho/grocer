@@ -1,0 +1,7 @@
+---
+version: "3.1"
+services:
+  grocer:
+    image: dfialho14/grocer
+    container_name: grocer
+    restart: unless-stopped
