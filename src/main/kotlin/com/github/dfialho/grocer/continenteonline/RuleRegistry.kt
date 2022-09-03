@@ -1,5 +1,6 @@
 package com.github.dfialho.grocer.continenteonline
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
@@ -27,13 +28,11 @@ class RuleRegistry {
                 .build()
         )
 
-    private var cachedRules: RulesList? = null
-
-    data class RulesList(val rules: List<Rule>)
+    private var cachedRules: List<Rule>? = null
 
     fun rules(): List<Rule> {
         val rules = try {
-            mapper.readValue(rulesFile.toFile(), RulesList::class.java)
+            mapper.readValue(rulesFile.toFile(), object : TypeReference<List<Rule>>() {})
         } catch (e: Exception) {
             val previousRules = cachedRules
 
@@ -46,6 +45,6 @@ class RuleRegistry {
             }
         }
 
-        return rules.rules
+        return rules
     }
 }
