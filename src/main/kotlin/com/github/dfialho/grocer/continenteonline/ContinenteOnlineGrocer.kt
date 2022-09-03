@@ -1,5 +1,6 @@
-package com.github.dfialho.grocer
+package com.github.dfialho.grocer.continenteonline
 
+import com.github.dfialho.grocer.Grocer
 import mu.KLogging
 import java.nio.file.FileSystems
 import java.nio.file.Path

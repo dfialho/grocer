@@ -1,6 +1,6 @@
 package com.github.dfialho.grocer
 
-sealed interface Grocer {
+interface Grocer {
     fun start()
     fun stop()
 }

@@ -1,5 +1,6 @@
 package com.github.dfialho.grocer
 
+import com.github.dfialho.grocer.continenteonline.ContinenteOnlineGrocer
 import io.quarkus.runtime.ShutdownEvent
 import io.quarkus.runtime.StartupEvent
 import org.eclipse.microprofile.config.ConfigProvider
