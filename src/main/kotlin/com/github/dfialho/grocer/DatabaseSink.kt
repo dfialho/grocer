@@ -28,13 +28,14 @@ class DatabaseSink(private val dataSource: AgroalDataSource) : Sink {
                     ps.executeUpdate()
                 }
 
-                connection.prepareStatement("INSERT INTO items VALUES (?, ?, ?, ?, ?)").use { ps ->
+                connection.prepareStatement("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?)").use { ps ->
                     for (item in receipt.items) {
                         ps.setString(1, item.id)
                         ps.setString(2, receipt.id)
                         ps.setString(3, item.category)
-                        ps.setString(4, item.name)
-                        ps.setLong(5, item.amount)
+                        ps.setString(4, item.subcategory)
+                        ps.setString(5, item.name)
+                        ps.setLong(6, item.amount)
                         ps.addBatch()
                     }
                     ps.executeBatch()

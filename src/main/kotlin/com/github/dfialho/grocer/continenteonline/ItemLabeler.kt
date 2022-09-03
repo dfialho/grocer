@@ -13,8 +13,9 @@ class ItemLabeler(private val ruleRegistry: RuleRegistry) {
             if (rule.matches(orderItem)) {
                 return Item(
                     id = itemId,
-                    name = rule.result.name ?: orderItem.name,
-                    category = rule.result.category ?: orderItem.category,
+                    category = rule.result.category,
+                    subcategory = rule.result.subcategory ?: rule.result.category,
+                    name = orderItem.name,
                     amount = orderItem.amount,
                     labeled = true
                 )
@@ -23,8 +24,9 @@ class ItemLabeler(private val ruleRegistry: RuleRegistry) {
 
         return Item(
             id = itemId,
-            name = orderItem.name,
             category = orderItem.category,
+            subcategory = orderItem.category,
+            name = orderItem.name,
             amount = orderItem.amount,
             labeled = false
         )

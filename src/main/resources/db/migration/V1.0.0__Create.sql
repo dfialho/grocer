@@ -7,11 +7,12 @@ CREATE TABLE receipts
 
 CREATE TABLE items
 (
-    id         VARCHAR(128),
-    receipt_id VARCHAR(128),
-    category   VARCHAR(128) NOT NULL,
-    name       VARCHAR(128) NOT NULL,
-    amount     INT          NOT NULL,
+    id          VARCHAR(128),
+    receipt_id  VARCHAR(128),
+    category    VARCHAR(128) NOT NULL,
+    subcategory VARCHAR(128) NOT NULL,
+    name        VARCHAR(256) NOT NULL,
+    amount      INT          NOT NULL,
 
     PRIMARY KEY (id, receipt_id),
     FOREIGN KEY (receipt_id) REFERENCES receipts (id)
