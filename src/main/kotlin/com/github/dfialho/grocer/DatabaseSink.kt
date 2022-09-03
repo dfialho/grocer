@@ -7,6 +7,11 @@ class DatabaseSink : Sink {
     companion object : KLogging()
 
     override fun sink(receipt: Receipt) {
-        logger.info { "$receipt" }
+
+        for (item in receipt.items) {
+            if (!item.labeled) {
+                logger.warn { "Item not labeled: $item" }
+            }
+        }
     }
 }
