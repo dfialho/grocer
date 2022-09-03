@@ -18,6 +18,7 @@ dependencies {
     implementation("io.quarkus:quarkus-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.quarkus:quarkus-arc")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
     testImplementation("io.quarkus:quarkus-junit5")
 }
 
@@ -38,13 +39,4 @@ allOpen {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
     kotlinOptions.javaParameters = true
-}
-
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("$projectDir/src/main/kotlin"))
-            destinationDirectory.set(File("$projectDir/build/classes/kotlin/main"))
-        }
-    }
 }
