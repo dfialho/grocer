@@ -12,6 +12,9 @@ services:
       GROCER_CONTINENTEONLINE_DIRECTORY: "/continenteonline"
     volumes:
       - /home/dfialho/Downloads/grocer:/continenteonline
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
 
   postgres:
@@ -22,4 +25,9 @@ services:
       POSTGRES_DB: grocer
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 2s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
