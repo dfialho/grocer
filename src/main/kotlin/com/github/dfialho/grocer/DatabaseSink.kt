@@ -1,11 +1,11 @@
 package com.github.dfialho.grocer
 
+import io.agroal.api.AgroalDataSource
 import mu.KLogging
 import java.sql.Date
-import javax.sql.DataSource
 
 
-class DatabaseSink(private val dataSource: DataSource) : Sink {
+class DatabaseSink(private val dataSource: AgroalDataSource) : Sink {
 
     companion object : KLogging()
 
@@ -17,36 +17,37 @@ class DatabaseSink(private val dataSource: DataSource) : Sink {
             }
         }
 
-        val connection = dataSource.connection
-        connection.autoCommit = false
+        dataSource.connection.use { connection ->
+            connection.autoCommit = false
 
-        try {
-            connection.prepareStatement("INSERT INTO receipts VALUES (?, ?, ?)").use { ps ->
-                ps.setString(1, receipt.id)
-                ps.setString(2, receipt.store)
-                ps.setDate(3, Date.valueOf(receipt.date))
-                ps.executeUpdate()
-            }
-
-            connection.prepareStatement("INSERT INTO items VALUES (?, ?, ?, ?, ?)").use { ps ->
-                for (item in receipt.items) {
-                    ps.setString(1, item.id)
-                    ps.setString(2, receipt.id)
-                    ps.setString(3, item.category)
-                    ps.setString(4, item.name)
-                    ps.setLong(5, item.amount)
-                    ps.addBatch()
+            try {
+                connection.prepareStatement("INSERT INTO receipts VALUES (?, ?, ?)").use { ps ->
+                    ps.setString(1, receipt.id)
+                    ps.setString(2, receipt.store)
+                    ps.setDate(3, Date.valueOf(receipt.date))
+                    ps.executeUpdate()
                 }
-                ps.executeBatch()
+
+                connection.prepareStatement("INSERT INTO items VALUES (?, ?, ?, ?, ?)").use { ps ->
+                    for (item in receipt.items) {
+                        ps.setString(1, item.id)
+                        ps.setString(2, receipt.id)
+                        ps.setString(3, item.category)
+                        ps.setString(4, item.name)
+                        ps.setLong(5, item.amount)
+                        ps.addBatch()
+                    }
+                    ps.executeBatch()
+                }
+
+                connection.commit()
+                logger.info { "Stored receipt ${receipt.id}" }
+
+            } catch (e: Exception) {
+                logger.error { "Failed to store receipt ${receipt.id}. Will be rolling back all changes" }
+                connection.rollback()
+                throw e
             }
-
-            connection.commit()
-            logger.info { "Stored receipt ${receipt.id}" }
-
-        } catch (e: Exception) {
-            logger.error { "Failed to store receipt ${receipt.id}. Will be rolling back all changes" }
-            connection.rollback()
-            throw e
         }
     }
 }

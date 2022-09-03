@@ -1,16 +1,16 @@
 package com.github.dfialho.grocer
 
 import com.github.dfialho.grocer.continenteonline.ContinenteOnlineGrocer
+import io.agroal.api.AgroalDataSource
 import io.quarkus.runtime.ShutdownEvent
 import io.quarkus.runtime.StartupEvent
 import org.eclipse.microprofile.config.ConfigProvider
 import java.nio.file.Paths
 import javax.enterprise.context.ApplicationScoped
 import javax.enterprise.event.Observes
-import javax.sql.DataSource
 
 @ApplicationScoped
-class App(dataSource: DataSource) {
+class App(dataSource: AgroalDataSource) {
 
     private val watchDirectory: String = ConfigProvider.getConfig().getValue("grocer.continenteonline.directory", String::class.java)
 
