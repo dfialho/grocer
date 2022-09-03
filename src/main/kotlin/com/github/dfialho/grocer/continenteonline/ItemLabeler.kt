@@ -1,6 +1,9 @@
 package com.github.dfialho.grocer.continenteonline
 
 import com.github.dfialho.grocer.Item
+import com.github.dfialho.grocer.continenteonline.rules.NameContainsRule
+import com.github.dfialho.grocer.continenteonline.rules.Rule
+import com.github.dfialho.grocer.continenteonline.rules.RuleResult
 import java.util.UUID.randomUUID
 
 class ItemLabeler {
@@ -20,7 +23,7 @@ class ItemLabeler {
                     name = rule.result.name,
                     category = rule.result.category,
                     amount = orderItem.amount,
-                    labeled = false
+                    labeled = true
                 )
             }
         }
