@@ -39,3 +39,12 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
     kotlinOptions.javaParameters = true
 }
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs(listOf("$projectDir/src/main/kotlin"))
+            destinationDirectory.set(File("$projectDir/build/classes/kotlin/main"))
+        }
+    }
+}
