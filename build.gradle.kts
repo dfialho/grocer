@@ -19,6 +19,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.quarkus:quarkus-arc")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
+    implementation("org.jsoup:jsoup:1.15.3")
     testImplementation("io.quarkus:quarkus-junit5")
 }
 
