@@ -5,12 +5,15 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.github.dfialho.grocer.continenteonline.rules.Rule
+import mu.KLogging
 import java.nio.file.Paths
 
 
 class RuleRegistry {
 
-    private val ruleConfigPath = Paths.get("/home/dfialho/Projects/grocer/rules.yml")
+    companion object : KLogging()
+
+    private val rulesFile = Paths.get("/home/dfialho/Projects/grocer/rules.yml")
     private val mapper = ObjectMapper(YAMLFactory())
         .findAndRegisterModules()
         .registerModule(
@@ -24,10 +27,25 @@ class RuleRegistry {
                 .build()
         )
 
+    private var cachedRules: RulesList? = null
+
     data class RulesList(val rules: List<Rule>)
 
     fun rules(): List<Rule> {
-        val rules = mapper.readValue(ruleConfigPath.toFile(), RulesList::class.java)
+        val rules = try {
+            mapper.readValue(rulesFile.toFile(), RulesList::class.java)
+        } catch (e: Exception) {
+            val previousRules = cachedRules
+
+            if (previousRules != null) {
+                logger.error(e) { "Failed to read rules file. Will fallback on previous read rules." }
+                previousRules
+            } else {
+                logger.error(e) { "Failed to read rules file. No previous rules to fallback on." }
+                throw e
+            }
+        }
+
         return rules.rules
     }
 }
