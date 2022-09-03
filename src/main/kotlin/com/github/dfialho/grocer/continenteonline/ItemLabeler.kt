@@ -3,9 +3,8 @@ package com.github.dfialho.grocer.continenteonline
 import com.github.dfialho.grocer.Item
 import java.util.UUID.randomUUID
 
-class ItemLabeler {
+class ItemLabeler(private val ruleRegistry: RuleRegistry) {
 
-    private val ruleRegistry = RuleRegistry()
     fun label(orderItem: OrderItem): Item {
 
         val itemId = randomUUID().toString()

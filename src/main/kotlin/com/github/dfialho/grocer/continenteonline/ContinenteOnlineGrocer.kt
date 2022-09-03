@@ -7,11 +7,18 @@ import mu.KLogging
 import java.nio.file.Path
 
 
-class ContinenteOnlineGrocer(watchDirectory: Path, sink: Sink) : Grocer {
+class ContinenteOnlineGrocer(watchDirectory: Path, rulesFile: Path, sink: Sink) : Grocer {
 
     companion object : KLogging()
 
-    private val orderWatcher = OrderWatcher(watchDirectory, OrderProcessor(OrderReader(), sink))
+    private val orderWatcher = OrderWatcher(
+        watchDirectory = watchDirectory,
+        listener = OrderProcessor(
+            orderReader = OrderReader(),
+            labeler = OrderLabeler(ItemLabeler(RuleRegistry(rulesFile))),
+            sink = sink
+        )
+    )
 
     override fun start() {
         logger.info { "Starting" }
@@ -25,9 +32,12 @@ class ContinenteOnlineGrocer(watchDirectory: Path, sink: Sink) : Grocer {
         logger.info { "Stopped" }
     }
 
-    class OrderProcessor(private val orderReader: OrderReader, private val sink: Sink) : OrderWatcher.Listener {
+    class OrderProcessor(
+        private val orderReader: OrderReader,
+        private val labeler: OrderLabeler,
+        private val sink: Sink
+    ) : OrderWatcher.Listener {
 
-        private val labeler = OrderLabeler()
         override fun onOrderFile(orderFile: Path) {
 
             val order = try {

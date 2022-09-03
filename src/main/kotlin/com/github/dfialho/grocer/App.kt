@@ -13,9 +13,13 @@ import javax.enterprise.event.Observes
 class App(dataSource: AgroalDataSource) {
 
     private val watchDirectory: String = ConfigProvider.getConfig().getValue("grocer.continenteonline.directory", String::class.java)
+    private val rulesFile: String = ConfigProvider.getConfig().getValue("grocer.continenteonline.rulesFile", String::class.java)
 
-    private val sink = DatabaseSink(dataSource)
-    private val grocer = ContinenteOnlineGrocer(Paths.get(watchDirectory), sink)
+    private val grocer = ContinenteOnlineGrocer(
+        watchDirectory = Paths.get(watchDirectory),
+        rulesFile = Paths.get(rulesFile),
+        sink = DatabaseSink(dataSource),
+    )
 
     fun onStart(@Observes ev: StartupEvent?) {
         grocer.start()

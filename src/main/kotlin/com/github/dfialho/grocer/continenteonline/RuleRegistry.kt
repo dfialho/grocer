@@ -6,14 +6,13 @@ import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.github.dfialho.grocer.continenteonline.rules.Rule
 import mu.KLogging
-import java.nio.file.Paths
+import java.nio.file.Path
 
 
-class RuleRegistry {
+class RuleRegistry(private val rulesFile: Path) {
 
     companion object : KLogging()
 
-    private val rulesFile = Paths.get("/home/dfialho/Projects/grocer/rules.yml")
     private val mapper = ObjectMapper(YAMLFactory())
         .findAndRegisterModules()
         .registerModule(
