@@ -4,6 +4,7 @@ services:
   grocer:
     image: dfialho14/grocer
     container_name: grocer
+    user: 1500:1500
     environment:
       QUARKUS_DATASOURCE_USERNAME: "postgres"
       QUARKUS_DATASOURCE_PASSWORD: "postgres"
