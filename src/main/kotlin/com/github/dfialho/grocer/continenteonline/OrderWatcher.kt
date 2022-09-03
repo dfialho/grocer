@@ -38,7 +38,7 @@ class OrderWatcher(private val watchDirectory: Path, private val listener: Liste
                     logger.debug { "New file: ${event.kind()} ${event.context()} ${event.count()}" }
                     val filePath = event.context() as Path
                     executor.submit {
-                        listener.onOrderFile(filePath.resolve(watchDirectory))
+                        listener.onOrderFile(watchDirectory.resolve(filePath))
                     }
                 }
 
