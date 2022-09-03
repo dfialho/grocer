@@ -2,6 +2,7 @@ package com.github.dfialho.grocer.continenteonline
 
 import mu.KLogging
 import java.nio.file.*
+import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
 class OrderWatcher(private val watchDirectory: Path, private val listener: Listener) {
@@ -15,6 +16,7 @@ class OrderWatcher(private val watchDirectory: Path, private val listener: Liste
     private lateinit var watchService: WatchService
     private lateinit var directoryKey: WatchKey
     private lateinit var serviceThread: Thread
+    private val executor = Executors.newSingleThreadExecutor()
 
     fun start() {
 
@@ -35,7 +37,9 @@ class OrderWatcher(private val watchDirectory: Path, private val listener: Liste
                 for (event in watchKey.pollEvents()) {
                     logger.debug { "New file: ${event.kind()} ${event.context()} ${event.count()}" }
                     val filePath = event.context() as Path
-                    listener.onOrderFile(filePath.resolve(watchDirectory))
+                    executor.submit {
+                        listener.onOrderFile(filePath.resolve(watchDirectory))
+                    }
                 }
 
                 if (!watchKey.reset()) {

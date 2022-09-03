@@ -11,9 +11,21 @@ class ContinenteOnlineGrocer(watchDirectory: Path, sink: Sink) : Grocer {
 
     companion object : KLogging()
 
-    private val orderWatcher = OrderWatcher(watchDirectory, OrderWatchListener(OrderReader(), sink))
+    private val orderWatcher = OrderWatcher(watchDirectory, OrderProcessor(OrderReader(), sink))
 
-    class OrderWatchListener(private val orderReader: OrderReader, private val sink: Sink) : OrderWatcher.Listener {
+    override fun start() {
+        logger.info { "Starting" }
+        orderWatcher.start()
+        logger.info { "Started" }
+    }
+
+    override fun stop() {
+        logger.info { "Stopping" }
+        orderWatcher.stop()
+        logger.info { "Stopped" }
+    }
+
+    class OrderProcessor(private val orderReader: OrderReader, private val sink: Sink) : OrderWatcher.Listener {
 
         private val labeler = OrderLabeler()
         override fun onOrderFile(orderFile: Path) {
@@ -32,17 +44,5 @@ class ContinenteOnlineGrocer(watchDirectory: Path, sink: Sink) : Grocer {
             logger.info { "Sending receipt to sink: $receipt" }
             sink.sink(receipt)
         }
-    }
-
-    override fun start() {
-        logger.info { "Starting" }
-        orderWatcher.start()
-        logger.info { "Started" }
-    }
-
-    override fun stop() {
-        logger.info { "Stopping" }
-        orderWatcher.stop()
-        logger.info { "Stopped" }
     }
 }
