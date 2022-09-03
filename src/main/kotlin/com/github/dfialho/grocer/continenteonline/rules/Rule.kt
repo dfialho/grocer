@@ -6,7 +6,8 @@ import com.github.dfialho.grocer.continenteonline.OrderItem
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
-    JsonSubTypes.Type(value = NameContainsRule::class, name = "NameContains")
+    JsonSubTypes.Type(value = NameContainsRule::class, name = "NameContains"),
+    JsonSubTypes.Type(value = CategoryContainsRule::class, name = "CategoryContains")
 )
 interface Rule {
     val result: RuleResult

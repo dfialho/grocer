@@ -14,8 +14,8 @@ class ItemLabeler {
             if (rule.matches(orderItem)) {
                 return Item(
                     id = itemId,
-                    name = rule.result.name,
-                    category = rule.result.category,
+                    name = rule.result.name ?: orderItem.name,
+                    category = rule.result.category ?: orderItem.category,
                     amount = orderItem.amount,
                     labeled = true
                 )
