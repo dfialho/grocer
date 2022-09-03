@@ -12,7 +12,9 @@ import javax.enterprise.event.Observes
 class App {
 
     private val watchDirectory: String = ConfigProvider.getConfig().getValue("grocer.continenteonline.directory", String::class.java)
-    private val grocer = ContinenteOnlineGrocer(Paths.get(watchDirectory))
+
+    private val sink = DatabaseSink()
+    private val grocer = ContinenteOnlineGrocer(Paths.get(watchDirectory), sink)
 
     fun onStart(@Observes ev: StartupEvent?) {
         grocer.start()
