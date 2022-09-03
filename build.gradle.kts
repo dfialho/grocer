@@ -20,6 +20,9 @@ dependencies {
     implementation("io.quarkus:quarkus-arc")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
     implementation("org.jsoup:jsoup:1.15.3")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
     testImplementation("io.quarkus:quarkus-junit5")
 }
 
