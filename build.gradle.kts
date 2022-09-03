@@ -23,6 +23,9 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+    implementation("io.quarkus:quarkus-agroal")
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
+    implementation("io.quarkus:quarkus-flyway")
     testImplementation("io.quarkus:quarkus-junit5")
 }
 

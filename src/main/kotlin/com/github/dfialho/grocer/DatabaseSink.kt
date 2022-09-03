@@ -2,7 +2,7 @@ package com.github.dfialho.grocer
 
 import mu.KLogging
 
-class DatabaseSink : Sink {
+class DatabaseSink() : Sink {
 
     companion object : KLogging()
 
