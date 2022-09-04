@@ -6,6 +6,7 @@ import java.io.StringReader
 import java.nio.file.Path
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ContinenteReceiptReader {
 
@@ -44,14 +45,14 @@ class ContinenteReceiptReader {
             if (line.endsWith(":")) {
                 ContinenteProcessor.logger.debug { "Category line: $line" }
                 category = line.removeSuffix(":")
-                ContinenteProcessor.logger.info { "Category '$category'" }
+                ContinenteProcessor.logger.debug { "Category '$category'" }
             } else if (!line.startsWith("(")) {
                 ContinenteProcessor.logger.debug { "Skip line" }
                 continue
             } else {
                 ContinenteProcessor.logger.debug { "Item line: $line" }
                 val lineWithoutTaxTag = line.substringAfter(") ")
-                ContinenteProcessor.logger.info { "Item '$lineWithoutTaxTag'" }
+                ContinenteProcessor.logger.debug { "Item '$lineWithoutTaxTag'" }
 
                 val tokens = lineWithoutTaxTag.split(" ")
 
@@ -73,8 +74,15 @@ class ContinenteReceiptReader {
                     )
                 }
 
-                ContinenteProcessor.logger.info { "$item" }
-                items.add(item)
+                val capitalizedItem = item.copy(
+                    name = item.name
+                        .split(" ")
+                        .map { it.lowercase() }
+                        .joinToString(" ") { word -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } }
+                )
+
+                ContinenteProcessor.logger.debug { "$capitalizedItem" }
+                items.add(capitalizedItem)
             }
         }
         return items
