@@ -18,7 +18,9 @@ class OrderWatcher(private val watchDirectory: Path, private val listener: Liste
     private lateinit var directoryKey: WatchKey
     private lateinit var serviceThread: Thread
     private val executor = Executors.newSingleThreadExecutor {
-        thread(name = "processor") { it.run() }
+        val thread = Executors.defaultThreadFactory().newThread(it)
+        thread.name = "processor"
+        thread
     }
 
     fun start() {
