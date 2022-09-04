@@ -1,8 +1,10 @@
 package com.github.dfialho.grocer.continenteonline
 
+import com.github.dfialho.grocer.ItemLabeler
 import com.github.dfialho.grocer.Receipt
 import com.github.dfialho.grocer.ReceiptFileProcessor
 import com.github.dfialho.grocer.Sink
+import com.github.dfialho.grocer.rules.RuleRegistry
 import mu.KLogging
 import java.nio.file.Path
 import kotlin.io.path.extension
@@ -11,7 +13,7 @@ class ContinenteOnlineProcessor(override val watchDirectory: Path, ruleRegistry:
     companion object : KLogging()
 
     private val orderReader = OrderReader()
-    private val labeler = OrderLabeler(ItemLabeler(ruleRegistry))
+    private val labeler = ContinenteOnlineLabeler(ItemLabeler(ruleRegistry))
 
     override fun onReceiptFile(receiptFile: Path) {
 
@@ -29,7 +31,7 @@ class ContinenteOnlineProcessor(override val watchDirectory: Path, ruleRegistry:
         }
 
         logger.info { "Labeling order: $order" }
-        val receipt: Receipt = labeler.label(order)
+        val receipt: Receipt = labeler.label(order.toUnlabeled())
 
         logger.info { "Sending receipt to sink: $receipt" }
         sink.sink(receipt)

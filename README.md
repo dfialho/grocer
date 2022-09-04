@@ -21,7 +21,7 @@ services:
       QUARKUS_DATASOURCE_PASSWORD: "postgres"
       QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://postgres:5432/grocer"
       GROCER_CONTINENTEONLINE_DIRECTORY: "/data/continenteonline"
-      GROCER_CONTINENTEONLINE_RULESFILE: "/config/rules.yml"
+      GROCER_CONTINENTEONLINE_RULESFILE: "/config/rules-continenteonline.yml"
     volumes:
       - <config-directory>:/config
       - <data-directory>:/data

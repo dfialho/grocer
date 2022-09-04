@@ -1,10 +1,9 @@
-package com.github.dfialho.grocer.continenteonline
+package com.github.dfialho.grocer.rules
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.github.dfialho.grocer.continenteonline.rules.Rule
 import mu.KLogging
 import java.nio.file.Path
 

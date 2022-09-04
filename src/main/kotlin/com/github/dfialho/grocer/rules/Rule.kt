@@ -1,8 +1,8 @@
-package com.github.dfialho.grocer.continenteonline.rules
+package com.github.dfialho.grocer.rules
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.github.dfialho.grocer.continenteonline.OrderItem
+import com.github.dfialho.grocer.UnlabeledItem
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
@@ -11,5 +11,5 @@ import com.github.dfialho.grocer.continenteonline.OrderItem
 )
 interface Rule {
     val result: RuleResult
-    fun matches(orderItem: OrderItem): Boolean
+    fun matches(item: UnlabeledItem): Boolean
 }

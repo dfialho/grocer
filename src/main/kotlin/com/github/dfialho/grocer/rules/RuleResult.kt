@@ -1,4 +1,4 @@
-package com.github.dfialho.grocer.continenteonline.rules
+package com.github.dfialho.grocer.rules
 
 data class RuleResult(
     val category: String,
