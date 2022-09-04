@@ -10,6 +10,7 @@ data class ContinenteItem(
     fun toUnlabeled() = UnlabeledItem(
         category = category,
         name = name,
-        amount = amount
+        amount = amount,
+        properties = emptyMap()
     )
 }

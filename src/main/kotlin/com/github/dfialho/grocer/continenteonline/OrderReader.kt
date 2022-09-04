@@ -1,6 +1,5 @@
 package com.github.dfialho.grocer.continenteonline
 
-import com.github.dfialho.grocer.Quantity
 import mu.KLogging
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

@@ -1,4 +1,4 @@
-package com.github.dfialho.grocer 
+package com.github.dfialho.grocer.continenteonline
 
 data class Quantity(
     val amount: Double,

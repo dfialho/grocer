@@ -17,7 +17,7 @@ class ItemLabeler(private val ruleRegistry: RuleRegistry) {
                     subcategory = rule.result.subcategory ?: rule.result.category,
                     name = unlabeledItem.name,
                     amount = unlabeledItem.amount,
-                    quantity = Quantity(1.0, "un"),
+                    properties = unlabeledItem.properties,
                     labeled = true
                 )
             }
@@ -29,7 +29,7 @@ class ItemLabeler(private val ruleRegistry: RuleRegistry) {
             subcategory = unlabeledItem.category,
             name = unlabeledItem.name,
             amount = unlabeledItem.amount,
-            quantity = Quantity(1.0, "un"),
+            properties = unlabeledItem.properties,
             labeled = false
         )
     }

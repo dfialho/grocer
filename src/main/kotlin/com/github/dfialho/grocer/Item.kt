@@ -6,6 +6,6 @@ data class Item(
     val subcategory: String,
     val name: String,
     val amount: Long,
-    val quantity: Quantity,
+    val properties: Map<String, Any>,
     val labeled: Boolean,
 )
