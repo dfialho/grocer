@@ -15,7 +15,7 @@ class ContinenteOnlineProcessor(override val watchDirectory: Path, ruleRegistry:
 
     override fun onReceiptFile(receiptFile: Path) {
 
-        if (receiptFile.extension != "html") {
+        if (receiptFile.extension.lowercase() != "html") {
             logger.info { "Ignoring file because it is not HTML: $receiptFile" }
             return
         }

@@ -12,12 +12,17 @@ class ContinenteProcessor(override val watchDirectory: Path) : ReceiptFileProces
 
     override fun onReceiptFile(receiptFile: Path) {
 
-        if (receiptFile.extension != "pdf") {
+        if (receiptFile.extension.lowercase() != "pdf") {
             logger.info { "Ignoring file because it is not PDF: $receiptFile" }
             return
         }
 
-        val receipt = reader.read(receiptFile)
-        println(receipt)
+        val receipt = try {
+            logger.info { "Reading file: $receiptFile" }
+            reader.read(receiptFile)
+        } catch (e: Exception) {
+            logger.warn(e) { "Failed to read file: $receiptFile. Will ignore the file." }
+            return
+        }
     }
 }
