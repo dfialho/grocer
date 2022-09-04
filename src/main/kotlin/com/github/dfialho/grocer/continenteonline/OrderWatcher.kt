@@ -4,6 +4,7 @@ import mu.KLogging
 import java.nio.file.*
 import java.util.concurrent.Executors
 import kotlin.concurrent.thread
+import kotlin.io.path.extension
 
 
 class OrderWatcher(private val watchDirectory: Path, private val listener: Listener) {
@@ -40,13 +41,19 @@ class OrderWatcher(private val watchDirectory: Path, private val listener: Liste
                 }
 
                 for (event in watchKey.pollEvents()) {
-                    logger.debug { "New file: ${event.kind()} ${event.context()} ${event.count()}" }
+                    logger.info { "New file: ${event.kind()} ${event.context()} ${event.count()}" }
                     val filePath = event.context() as Path
+
+                    if (filePath.extension != "html") {
+                        logger.info { "Ignoring file because it is not HTML: $filePath" }
+                        continue
+                    }
+
                     executor.submit {
                         try {
                             listener.onOrderFile(watchDirectory.resolve(filePath))
                         } catch (e: Exception) {
-                            logger.error(e) { "Failed to process order file: ${filePath}" }
+                            logger.error(e) { "Failed to process order file: $filePath" }
                         }
                     }
                 }
