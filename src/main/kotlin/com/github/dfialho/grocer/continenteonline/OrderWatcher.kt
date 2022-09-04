@@ -17,11 +17,13 @@ class OrderWatcher(private val watchDirectory: Path, private val listener: Liste
     private lateinit var watchService: WatchService
     private lateinit var directoryKey: WatchKey
     private lateinit var serviceThread: Thread
-    private val executor = Executors.newSingleThreadExecutor()
+    private val executor = Executors.newSingleThreadExecutor {
+        thread(name = "processor") { it.run() }
+    }
 
     fun start() {
 
-        serviceThread = thread {
+        serviceThread = thread(name = "watcher") {
             watchService = FileSystems.getDefault().newWatchService()
             directoryKey = watchDirectory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE)
             logger.info { "Watching directory: $watchDirectory" }
