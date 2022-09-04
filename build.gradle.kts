@@ -26,6 +26,7 @@ dependencies {
     implementation("io.quarkus:quarkus-agroal")
     implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation("io.quarkus:quarkus-flyway")
+    implementation("org.apache.pdfbox:pdfbox:2.0.26")
     testImplementation("io.quarkus:quarkus-junit5")
 }
 
