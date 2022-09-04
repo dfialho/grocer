@@ -28,7 +28,7 @@ class DatabaseSink(private val dataSource: AgroalDataSource) : Sink {
                     ps.executeUpdate()
                 }
 
-                connection.prepareStatement("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?)").use { ps ->
+                connection.prepareStatement("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?)").use { ps ->
                     for (item in receipt.items) {
                         ps.setString(1, item.id)
                         ps.setString(2, receipt.id)
@@ -36,6 +36,8 @@ class DatabaseSink(private val dataSource: AgroalDataSource) : Sink {
                         ps.setString(4, item.subcategory)
                         ps.setString(5, item.name)
                         ps.setLong(6, item.amount)
+                        ps.setDouble(7, item.quantity.amount)
+                        ps.setString(8, item.quantity.unit)
                         ps.addBatch()
                     }
                     ps.executeBatch()

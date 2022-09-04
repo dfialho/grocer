@@ -17,6 +17,7 @@ class ItemLabeler(private val ruleRegistry: RuleRegistry) {
                     subcategory = rule.result.subcategory ?: rule.result.category,
                     name = orderItem.name,
                     amount = orderItem.amount,
+                    quantity = orderItem.quantity,
                     labeled = true
                 )
             }
@@ -28,6 +29,7 @@ class ItemLabeler(private val ruleRegistry: RuleRegistry) {
             subcategory = orderItem.category,
             name = orderItem.name,
             amount = orderItem.amount,
+            quantity = orderItem.quantity,
             labeled = false
         )
     }

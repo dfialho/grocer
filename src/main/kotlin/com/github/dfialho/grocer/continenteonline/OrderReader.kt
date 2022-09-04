@@ -1,5 +1,6 @@
 package com.github.dfialho.grocer.continenteonline
 
+import com.github.dfialho.grocer.Quantity
 import mu.KLogging
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -21,17 +22,28 @@ class OrderReader {
 
     private fun parseItems(document: Document): List<OrderItem> {
 
-        val itemNames = document.select("a[class*=ct-font--opensans-bold d-block]").map { it.text() }
-        val itemAmounts = document.select("span[class*=ct-order-history--product-total-price]")
+        val names = document.select("a[class*=ct-font--opensans-bold d-block]").map { it.text() }
+        val amounts = document.select("span[class*=ct-order-history--product-total-price]")
             .map { it.text() }
             .map { it.replace("€", "") }
             .map { it.replace(",", "") }
             .map { it.toLong() }
-        val itemCategories = document.select("div.ct-order-history--product-item")
+        val categories = document.select("div.ct-order-history--product-item")
             .map { it.attr("data-category") }
+        val quantities = document.select("span.ct-order-history--product-quantity")
+            .map { it.text() }
+            .map { it.split(" ") }
+            .map { Quantity(it[0].toDouble(), it[1].trim()) }
 
-        return itemNames.zip(itemAmounts).zip(itemCategories)
-            .map { (nameAndAmount, category) -> OrderItem(nameAndAmount.first, category, nameAndAmount.second) }
+        return names.indices
+            .map { i ->
+                OrderItem(
+                    name = names[i],
+                    category = categories[i],
+                    amount = amounts[i],
+                    quantity = quantities[i],
+                )
+            }
     }
 
     private fun parseDate(document: Document): LocalDate {
