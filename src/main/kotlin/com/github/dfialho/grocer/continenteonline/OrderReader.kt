@@ -71,7 +71,7 @@ class OrderReader {
             else -> 1
         }
 
-        return LocalDate.of(dateTokens[2].toInt(), monthNumber, dateTokens[0].toInt())
+        return LocalDate.of(dateTokens[2].toInt() + 2000, monthNumber, dateTokens[0].toInt())
     }
 
     private fun parseOrderId(document: Document): String {
