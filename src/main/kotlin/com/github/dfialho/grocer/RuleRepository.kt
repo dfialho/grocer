@@ -27,42 +27,38 @@ class RuleRepository(@Suppress("CdiInjectionPointsInspection") private val dataS
     fun all(): List<Rule> {
 
         dataSource.connection.use { connection ->
-            val ps = connection.prepareStatement("SELECT * FROM rules")
-            val resultSet = ps.executeQuery()
-
-            val rules = mutableListOf<Rule>()
-            while (resultSet.next()) {
-                rules.add(
+            return connection.prepareStatement("SELECT * FROM rules")
+                .executeQuery()
+                .map {
                     Rule(
-                        id = resultSet.getObject("id") as UUID,
-                        spec = mapper.readValue(resultSet.getString("spec")),
+                        id = it.getObject("id") as UUID,
+                        spec = mapper.readValue(it.getString("spec")),
                     )
-                )
-            }
-
-            return rules
+                }
         }
     }
 
     fun create(rule: Rule) {
 
         dataSource.connection.use { connection ->
-            val ps = connection.prepareStatement("INSERT INTO rules VALUES (?, ?)")
-            ps.setObject(1, rule.id)
-            ps.setObject(2, PGobject().apply {
-                type = "json"
-                value = mapper.writeValueAsString(rule.spec)
-            })
-            ps.executeUpdate()
+            with(connection.prepareStatement("INSERT INTO rules VALUES (?, ?)")) {
+                setObject(1, rule.id)
+                setObject(2, PGobject().apply {
+                    type = "json"
+                    value = mapper.writeValueAsString(rule.spec)
+                })
+                executeUpdate()
+            }
         }
     }
 
     fun delete(ruleId: UUID) {
 
         dataSource.connection.use { connection ->
-            val ps = connection.prepareStatement("DELETE FROM rules WHERE id = ?")
-            ps.setObject(1, ruleId)
-            ps.executeUpdate()
+            with(connection.prepareStatement("DELETE FROM rules WHERE id = ?")) {
+                setObject(1, ruleId)
+                executeUpdate()
+            }
         }
     }
 }
