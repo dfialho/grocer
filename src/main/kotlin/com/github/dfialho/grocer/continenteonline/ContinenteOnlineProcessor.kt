@@ -1,10 +1,6 @@
 package com.github.dfialho.grocer.continenteonline
 
-import com.github.dfialho.grocer.ItemLabeler
-import com.github.dfialho.grocer.Receipt
-import com.github.dfialho.grocer.ReceiptFileProcessor
-import com.github.dfialho.grocer.Sink
-import com.github.dfialho.grocer.rules.RuleRegistry
+import com.github.dfialho.grocer.*
 import mu.KLogging
 import java.nio.file.Path
 import kotlin.io.path.extension

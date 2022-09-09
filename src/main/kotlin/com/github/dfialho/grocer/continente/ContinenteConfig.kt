@@ -8,7 +8,4 @@ interface ContinenteConfig {
 
     @get:WithName("directory")
     val watchDirectory: String
-
-    @get:WithName("rulesFile")
-    val rulesFile: String
 }

@@ -2,7 +2,7 @@ package com.github.dfialho.grocer.continente
 
 import com.github.dfialho.grocer.ItemLabeler
 import com.github.dfialho.grocer.ReceiptFileProcessor
-import com.github.dfialho.grocer.rules.RuleRegistry
+import com.github.dfialho.grocer.RuleRegistry
 import mu.KLogging
 import java.nio.file.Path
 import kotlin.io.path.extension
