@@ -1,5 +1,6 @@
 package com.github.dfialho.grocer
 
+import java.util.*
 import javax.ws.rs.*
 
 @Path("rules")
@@ -17,7 +18,7 @@ class RuleResource(private val service: RuleService) {
 
     @DELETE
     @Path("{ruleId}")
-    fun remove(@PathParam("ruleId") ruleId: String) {
+    fun remove(@PathParam("ruleId") ruleId: UUID) {
         service.remove(ruleId)
     }
 }
