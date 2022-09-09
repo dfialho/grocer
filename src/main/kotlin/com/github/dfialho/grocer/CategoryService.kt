@@ -24,4 +24,19 @@ class CategoryService(private val repository: CategoriesRepository) {
     fun remove(categoryId: UUID) {
         repository.delete(categoryId)
     }
+
+    fun createSubcategory(categoryId: UUID, subcategory: SaveSubCategory): SubCategory {
+
+        val createdSubCategory = SubCategory(
+            id = randomUUID(),
+            categoryId = categoryId,
+            name = subcategory.name
+        )
+        repository.createSubCategory(createdSubCategory)
+        return createdSubCategory
+    }
+
+    fun getCategorySubcategories(categoryId: UUID): List<SubCategory> {
+        return repository.getCategorySubcategories(categoryId)
+    }
 }

@@ -42,4 +42,38 @@ class CategoriesRepository(@Suppress("CdiInjectionPointsInspection") private val
             ps.executeUpdate()
         }
     }
+
+    fun createSubCategory(subCategory: SubCategory) {
+
+        dataSource.connection.use { connection ->
+            val ps = connection.prepareStatement("INSERT INTO subcategories VALUES (?, ?, ?)")
+            ps.setObject(1, subCategory.id)
+            ps.setObject(2, subCategory.categoryId)
+            ps.setString(3, subCategory.name)
+            ps.executeUpdate()
+        }
+    }
+
+    fun getCategorySubcategories(categoryId: UUID): List<SubCategory> {
+
+        // TODO check if category exists, if not throw not found or find another representation
+        //      like putting the subcategories as a json under categories
+        dataSource.connection.use { connection ->
+            val ps = connection.prepareStatement("SELECT * FROM subcategories WHERE category_id = ?")
+            ps.setObject(1, categoryId)
+
+            val resultSet = ps.executeQuery()
+            val subCategories = mutableListOf<SubCategory>()
+            while (resultSet.next()) {
+                subCategories.add(
+                    SubCategory(
+                        id = resultSet.getObject("id") as UUID,
+                        categoryId = resultSet.getObject("category_id") as UUID,
+                        name = resultSet.getString("name")
+                    )
+                )
+            }
+            return subCategories
+        }
+    }
 }
