@@ -1,8 +1,7 @@
-package com.github.dfialho.grocer.rest
+package com.github.dfialho.grocer.rest.receipts
 
 import java.time.LocalDate
 import java.util.*
-import java.util.UUID.randomUUID
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
@@ -14,7 +13,7 @@ class ReceiptsResource {
     fun list(): List<Receipt> {
         return listOf(
             Receipt(
-                id = randomUUID(),
+                id = UUID.randomUUID(),
                 name = "receipt B",
                 store = "Continente",
                 amount = 1000,
@@ -22,7 +21,7 @@ class ReceiptsResource {
                 categorization = ReceiptCategorization.Unprocessed
             ),
             Receipt(
-                id = randomUUID(),
+                id = UUID.randomUUID(),
                 name = "receipt B",
                 store = "Continente",
                 amount = 1000,
@@ -30,7 +29,7 @@ class ReceiptsResource {
                 categorization = ReceiptCategorization.Processing
             ),
             Receipt(
-                id = randomUUID(),
+                id = UUID.randomUUID(),
                 name = "receipt A",
                 store = "Continente",
                 amount = 1000,

@@ -1,7 +1,7 @@
-package com.github.dfialho.grocer.rest
+package com.github.dfialho.grocer.rest.rules
 
+import com.github.dfialho.grocer.rest.rules.conditions.NameIsCondition
 import java.util.*
-import java.util.UUID.randomUUID
 import javax.ws.rs.*
 
 @Path("rules")
@@ -10,9 +10,9 @@ class RulesResource {
     @POST
     fun create(request: CreateRuleRequest): Rule {
         return Rule(
-            id = randomUUID(),
+            id = UUID.randomUUID(),
             condition = NameIsCondition("BANANA trop"),
-            categoryId = randomUUID(),
+            categoryId = UUID.randomUUID(),
             categoryGroup = "Fruits",
             category = "Bananas",
         )
@@ -22,16 +22,16 @@ class RulesResource {
     fun list(@QueryParam("rule") ruleId: UUID): List<Rule> {
         return listOf(
             Rule(
-                id = randomUUID(),
+                id = UUID.randomUUID(),
                 condition = NameIsCondition("BANANA trop"),
-                categoryId = randomUUID(),
+                categoryId = UUID.randomUUID(),
                 categoryGroup = "Fruits",
                 category = "Bananas",
             ),
             Rule(
-                id = randomUUID(),
+                id = UUID.randomUUID(),
                 condition = NameIsCondition("CogMelo"),
-                categoryId = randomUUID(),
+                categoryId = UUID.randomUUID(),
                 categoryGroup = "Vegetables",
                 category = "Mushrooms",
             ),
@@ -44,7 +44,7 @@ class RulesResource {
         return Rule(
             id = ruleId,
             condition = NameIsCondition("BANANA trop"),
-            categoryId = randomUUID(),
+            categoryId = UUID.randomUUID(),
             categoryGroup = "Fruits",
             category = "Bananas",
         )

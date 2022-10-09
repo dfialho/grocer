@@ -1,4 +1,4 @@
-package com.github.dfialho.grocer.rest
+package com.github.dfialho.grocer.rest.rules
 
 import java.util.*
 

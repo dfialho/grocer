@@ -1,5 +1,6 @@
-package com.github.dfialho.grocer.rest
+package com.github.dfialho.grocer.rest.categories
 
+import com.github.dfialho.grocer.rest.rules.CreateRuleRequest
 import java.util.*
 import java.util.UUID.randomUUID
 import javax.ws.rs.GET

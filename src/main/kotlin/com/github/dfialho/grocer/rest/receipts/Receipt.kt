@@ -1,4 +1,4 @@
-package com.github.dfialho.grocer.rest
+package com.github.dfialho.grocer.rest.receipts
 
 import java.time.LocalDate
 import java.util.*

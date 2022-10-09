@@ -1,7 +1,6 @@
-package com.github.dfialho.grocer.rest
+package com.github.dfialho.grocer.rest.items
 
 import java.util.*
-import java.util.UUID.randomUUID
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
@@ -14,21 +13,21 @@ class ItemsResource {
     fun list(@QueryParam("receipt") receiptId: UUID?): List<Item> {
         return listOf(
             Item(
-                id = randomUUID(),
+                id = UUID.randomUUID(),
                 name = "BANANA TROP",
                 category = "Bananas",
                 categoryGroup = "Fruits",
                 amount = 1000,
-                receiptId = randomUUID(),
+                receiptId = UUID.randomUUID(),
                 importCategory = "FRUITS & VEGS",
             ),
             Item(
-                id = randomUUID(),
+                id = UUID.randomUUID(),
                 name = "BANANA TROP",
                 category = null,
                 categoryGroup = null,
                 amount = 1000,
-                receiptId = randomUUID(),
+                receiptId = UUID.randomUUID(),
                 importCategory = "FRUITS & VEGS",
             )
         )
@@ -38,12 +37,12 @@ class ItemsResource {
     @Path("{item-id}")
     fun get(@PathParam("item-id") itemId: UUID): Item {
         return Item(
-            id = randomUUID(),
+            id = UUID.randomUUID(),
             name = "BANANA TROP",
             category = "Bananas",
             categoryGroup = "Fruits",
             amount = 1000,
-            receiptId = randomUUID(),
+            receiptId = UUID.randomUUID(),
             importCategory = "FRUITS & VEGS",
         )
     }

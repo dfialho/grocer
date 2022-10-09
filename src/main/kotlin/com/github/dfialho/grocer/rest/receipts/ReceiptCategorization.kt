@@ -1,4 +1,4 @@
-package com.github.dfialho.grocer.rest
+package com.github.dfialho.grocer.rest.receipts
 
 sealed class ReceiptCategorization {
     object Unprocessed : ReceiptCategorization()
