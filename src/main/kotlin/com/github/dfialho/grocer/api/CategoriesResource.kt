@@ -11,7 +11,7 @@ import javax.ws.rs.PathParam
 class CategoriesResource {
 
     @POST
-    fun create(request: CreateCategoryRequest): Category {
+    fun create(request: CreateRuleRequest): Category {
         return Category(
             id = randomUUID(),
             name = request.name,
